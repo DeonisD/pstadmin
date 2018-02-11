@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="title">Список населенных пунктов
+        <h:panelGroup rendered="#{cityMB.exist}">( последнее обновление:
+            <h:outputText id="last1" value="#{cityMB.lastModified}" >
+		<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+            </h:outputText>
+            )
+        </h:panelGroup>
+    </ui:define>
+    
+    
+    <ui:define name="body">
+        <h:form enctype="multipart/form-data">
+            <p:fileUpload label="Загрузить новый" allowTypes="/(\.|\/)(dbf|DBF)$/" oncomplete="location.reload();" auto="true" mode="advanced" fileUploadListener="#{fileUpload.handleDBFUpload}"/>
+        </h:form>
+        <h:panelGroup id="cityTable" >
+            <h:form>
+                <p:dataTable rowKey="#{bin.SOATO}" widgetVar="cityTable" var="bin" value="#{cityMB.cities}" rows="15" paginator="true" filteredValue="#{cityMB.filteredCities}">
+                
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Search all:"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('cityTable').filter()" style="width:150px" placeholder="Search text"/>
+                    </p:outputPanel>
+                </f:facet>
+                
+                <p:column headerText="SOATO" width="90" filterMatchMode="contains" ><h:outputText value="#{bin.SOATO}"/> </p:column>
+                <p:column headerText="TIP"   width="30" ><h:outputText value="#{bin.TIP}"/> </p:column>
+                <p:column headerText="NAME"   ><h:outputText value="#{bin.NAME}"/> </p:column>
+                <p:column headerText="OBL"    ><h:outputText value="#{bin.OBL}"/> </p:column>
+                <p:column headerText="RAION"  ><h:outputText value="#{bin.RAION}"/> </p:column>
+                <p:column headerText="SOVET"  ><h:outputText value="#{bin.SOVET}"/> </p:column>
+                <p:column headerText="GNI"    width="50" ><h:outputText value="#{bin.GNI}"/> </p:column>
+                <p:column headerText="DATEL"  width="100" >
+                    <h:outputText value="#{bin.DATEL}">
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
+                    </h:outputText>    
+                </p:column>
+                <p:column headerText="SOATON" width="100"><h:outputText value="#{bin.SOATON}"/> </p:column>
+                <p:column headerText="DATAV"  width="100" ><h:outputText value="#{bin.DATAV}"/> </p:column>
+            </p:dataTable>
+            </h:form>
+        </h:panelGroup>    
+    </ui:define>
+    
+</ui:composition>
+

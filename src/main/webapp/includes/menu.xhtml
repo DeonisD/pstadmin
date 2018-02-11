@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+     <ul class="sidebar-menu" style="margin-top:30px">
+        <li>
+            <p:link href="/index.xhtml" onclick="clearBreadCrumbs()">
+                <i class="fa fa-home"></i>
+                <span>На главную</span>
+            </p:link>
+        </li>
+         
+         <li class="treeview">
+             <a href="#">
+                 <i class="fa fa-laptop"></i>
+                 <span>Справочники</span>
+                 <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+             </a>
+             <ul class="treeview-menu">
+                <li>
+                    <p:link href="/card-bin-list.xhtml">
+                        <i class="fa fa-credit-card"></i>
+                        <span>БИН-таблица</span>
+                    </p:link>
+                </li>
+                <li>
+                    <p:link href="/city-list.xhtml">
+                        <i class="fa fa-building"></i>
+                        <span>Адреса</span>
+                    </p:link>
+                </li>
+             </ul>
+         </li>
+    </ul>
+
+</ui:composition>

@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="title">БИН-таблица 
+        <h:panelGroup rendered="#{binCardsMB.exist}">( последнее обновление:
+            <h:outputText id="last" value="#{binCardsMB.lastModified}" >
+		<f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+            </h:outputText>
+            )
+        </h:panelGroup>
+        <h:panelGroup rendered="#{!binCardsMB.exist}">( файл не загружен )</h:panelGroup>
+    </ui:define>
+    
+    
+    
+    <ui:define name="body">
+        
+        <h:form enctype="multipart/form-data">
+            <p:fileUpload label="Загрузить новый" allowTypes="/(\.|\/)(csv|CSV)$/" auto="true" oncomplete="location.reload();" mode="advanced" fileUploadListener="#{fileUpload.handleUpload}"/>
+        </h:form>
+        
+        <div class="box box-primary">
+            <p:dataTable widgetVar="binCardsTable" var="bin" value="#{binCardsMB.records}" lazy="true" rows="15" paginator="true">
+                <p:column headerText="" width="50"><h:outputText value="#{bin.column1}"/> </p:column>
+                <p:column headerText="" width="50"><h:outputText value="#{bin.column2}"/> </p:column>
+                <p:column headerText=""><h:outputText value="#{bin.column3}"/> </p:column>
+                <p:column headerText=""><h:outputText value="#{bin.column4}"/> </p:column>
+            </p:dataTable>
+        </div>    
+    </ui:define>
+    
+</ui:composition>
+
