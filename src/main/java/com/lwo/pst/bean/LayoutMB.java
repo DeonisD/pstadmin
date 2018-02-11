@@ -21,12 +21,6 @@ public class LayoutMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println("--> " + (datasource == null) );
-        try {
-            System.out.println("--> " + (datasource.getConnection().nativeSQL("select * from test")) );
-        } catch ( Exception e ){
-            e.printStackTrace( System.err );
-        }    
         setDefaultLayout();
     }
 
