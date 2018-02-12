@@ -3,10 +3,9 @@
   <Resource auth="Container" factory="org.jboss.weld.resources.ManagerObjectFactory" name="BeanManager" type="javax.enterprise.inject.spi.BeanManager"/>
   
   <Resource
-      auth="Container"
       name="h2"
       type="javax.sql.DataSource"
-      url="jdbc:h2:${catalina.base}/data/pstadmin;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'"
+      url="jdbc:h2:${catalina.base}/data/pstadmin;FILE_LOCK=NO;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'"
       driverClassName="org.h2.Driver"
       username="pstadmin"
       password="pstadmin"

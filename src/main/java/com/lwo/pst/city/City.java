@@ -5,6 +5,7 @@ package com.lwo.pst.city;
  * @author drozdov_d
  */
 public class City {
+    private int Id;
     private String SOATO;
     private String TIP;
     private String NAME;
@@ -17,6 +18,14 @@ public class City {
     private String DATAV;
 
     public City() {
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public String getSOATO() {

@@ -24,8 +24,9 @@
         
         <div class="box box-primary">
             <p:dataTable widgetVar="binCardsTable" var="bin" value="#{binCardsMB.records}" lazy="true" rows="15" paginator="true">
-                <p:column headerText="" width="50"><h:outputText value="#{bin.column1}"/> </p:column>
-                <p:column headerText="" width="50"><h:outputText value="#{bin.column2}"/> </p:column>
+                <p:column headerText="ID" width="50"><h:outputText value="#{bin.id}"/> </p:column>
+                <p:column headerText=""   width="50"><h:outputText value="#{bin.column1}"/> </p:column>
+                <p:column headerText=""   width="50"><h:outputText value="#{bin.column2}"/> </p:column>
                 <p:column headerText=""><h:outputText value="#{bin.column3}"/> </p:column>
                 <p:column headerText=""><h:outputText value="#{bin.column4}"/> </p:column>
             </p:dataTable>

@@ -18,32 +18,46 @@
         <h:form enctype="multipart/form-data">
             <p:fileUpload label="Загрузить новый" allowTypes="/(\.|\/)(dbf|DBF)$/" oncomplete="location.reload();" auto="true" mode="advanced" fileUploadListener="#{fileUpload.handleDBFUpload}"/>
         </h:form>
-        <h:panelGroup id="cityTable" >
-            <h:form>
-                <p:dataTable rowKey="#{bin.SOATO}" widgetVar="cityTable" var="bin" value="#{cityMB.cities}" rows="15" paginator="true" filteredValue="#{cityMB.filteredCities}">
+        
+        <h:panelGroup>
+            <h:form id="cityTable">
+                <p:dataTable id="cities" globalFilter="true" rowKey="#{bin.id}" widgetVar="cityTable" var="bin" value="#{cityMB.cities}" rows="15" paginator="true" filterEvent="enter">
                 
                 <f:facet name="header">
                     <p:outputPanel>
                         <h:outputText value="Search all:"/>
-                        <p:inputText id="globalFilter" onkeyup="PF('cityTable').filter()" style="width:150px" placeholder="Search text"/>
+                        <p:inputText id="globalFilter" style="width:150px" placeholder="Search text" onkeyup="PF('cityTable').filter()">
+                            
+                        </p:inputText>
                     </p:outputPanel>
                 </f:facet>
                 
-                <p:column headerText="SOATO" width="90" filterMatchMode="contains" ><h:outputText value="#{bin.SOATO}"/> </p:column>
-                <p:column headerText="TIP"   width="30" ><h:outputText value="#{bin.TIP}"/> </p:column>
-                <p:column headerText="NAME"   ><h:outputText value="#{bin.NAME}"/> </p:column>
-                <p:column headerText="OBL"    ><h:outputText value="#{bin.OBL}"/> </p:column>
-                <p:column headerText="RAION"  ><h:outputText value="#{bin.RAION}"/> </p:column>
-                <p:column headerText="SOVET"  ><h:outputText value="#{bin.SOVET}"/> </p:column>
-                <p:column headerText="GNI"    width="50" ><h:outputText value="#{bin.GNI}"/> </p:column>
-                <p:column headerText="DATEL"  width="100" >
+                <p:column headerText="ID"    width="50" filterBy="#{bin.id}" ><h:outputText value="#{bin.id}"/> </p:column>    
+                <p:column headerText="SOATO" width="90" filterBy="#{bin.SOATO}" ><h:outputText value="#{bin.SOATO}"/> </p:column>
+                <p:column headerText="TIP"   width="30" filterBy="#{bin.TIP}" ><h:outputText value="#{bin.TIP}"/> </p:column>
+                <p:column headerText="NAME"  filterBy="#{bin.NAME}" ><h:outputText value="#{bin.NAME}"/> </p:column>
+                <p:column headerText="OBL"   filterBy="#{bin.OBL}" ><h:outputText value="#{bin.OBL}"/> </p:column>
+                <p:column headerText="RAION" filterBy="#{bin.RAION}" ><h:outputText value="#{bin.RAION}"/> </p:column>
+                <p:column headerText="SOVET" filterBy="#{bin.SOVET}" ><h:outputText value="#{bin.SOVET}"/> </p:column>
+                <p:column headerText="GNI"   filterBy="#{bin.GNI}" width="50" ><h:outputText value="#{bin.GNI}"/> </p:column>
+                <p:column headerText="DATEL" filterBy="#{bin.DATEL}" width="100" >
                     <h:outputText value="#{bin.DATEL}">
                         <f:convertDateTime pattern="dd.MM.yyyy" />
                     </h:outputText>    
                 </p:column>
-                <p:column headerText="SOATON" width="100"><h:outputText value="#{bin.SOATON}"/> </p:column>
-                <p:column headerText="DATAV"  width="100" ><h:outputText value="#{bin.DATAV}"/> </p:column>
+                <p:column headerText="SOATON" filterBy="#{bin.SOATON}" width="100"><h:outputText value="#{bin.SOATON}"/> </p:column>
+                <p:column headerText="DATAV"  filterBy="#{bin.DATAV}" width="100" ><h:outputText value="#{bin.DATAV}"/> </p:column>
+                <p:ajax event="filter" process="@form" listener="#{cityMB.filterListener}" oncomplete="testfunction(xhr, status, args)" />
             </p:dataTable>
+                <script>
+                    function testfunction(xhr, status, args){
+                        var xml = $.parseXML( xhr.responseText );
+                        console.log( xml );
+                        console.log( xml.getElementsByTagName("partial-response")[0] );
+                        
+                        console.log( xhr );
+                    }
+                </script>    
             </h:form>
         </h:panelGroup>    
     </ui:define>

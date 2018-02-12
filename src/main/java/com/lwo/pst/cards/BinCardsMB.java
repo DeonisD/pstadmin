@@ -1,10 +1,7 @@
 package com.lwo.pst.cards;
 
 import com.lwo.pst.util.Utils;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -21,6 +19,8 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class BinCardsMB implements Serializable {
+    
+    @Inject CardsService service;
     
     private boolean exist = false;
     private Date lastModified;
@@ -33,25 +33,11 @@ public class BinCardsMB implements Serializable {
         if ( cards.exists() ){
             this.exist          = true;
             this.lastModified   = new Date( cards.lastModified() );
-            setRecords( cards );
+            this.records        = service.getListBin();
         }
     }
 
-    private void setRecords( File file ){
-        
-        this.records.clear();
-        
-        try (BufferedReader br = new BufferedReader(new FileReader( file ))) {
-            String line, cvsSplitBy = ";";
-            while ((line = br.readLine()) != null) {
-                String[] country = line.split(cvsSplitBy);
-                BinRecord record = new BinRecord( country );
-                        this.records.add(record);
-            }
-        } catch (IOException e) {
-            e.printStackTrace( System.err );
-        }
-    }
+    
     
     public boolean isExist() {
         return exist;

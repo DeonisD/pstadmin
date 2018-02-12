@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class BinRecord implements Serializable {
 
+    private int id;
     private String column1;
     private String column2;
     private String column3;
@@ -55,8 +56,16 @@ public class BinRecord implements Serializable {
         this.column4 = column4;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
-        return "BinRecord{" + "column1=" + column1 + ", column2=" + column2 + ", column3=" + column3 + ", column4=" + column4 + '}';
+        return "BinRecord{" + "id=" + id + ", column1=" + column1 + ", column2=" + column2 + ", column3=" + column3 + ", column4=" + column4 + '}';
     }
 }

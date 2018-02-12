@@ -8,9 +8,6 @@
  * Created: 10.02.2018
  */
 
-CREATE TABLE IF NOT EXISTS TEST(ID INT PRIMARY KEY, NAME VARCHAR(255));
-merge INTO TEST VALUES (1, 'mkyong');
-
 create table if not exists city (
     id int primary key,
     soato varchar,
@@ -23,4 +20,12 @@ create table if not exists city (
     datel varchar,
     soaton varchar,
     datav varchar
+);
+
+create table if not exists cardbin (
+    id int primary key,
+    column1 varchar,
+    column2 varchar,
+    column3 varchar,
+    column4 varchar
 );

@@ -1,23 +1,18 @@
 package com.lwo.pst.city;
 
-import com.lwo.dbf.core.DbfMetadata;
-import com.lwo.dbf.core.DbfRecord;
-import com.lwo.dbf.reader.DbfReader;
-import com.lwo.pst.util.Utils;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.component.inputtext.InputText;
+import org.primefaces.event.data.FilterEvent;
 
 /**
  *
@@ -27,60 +22,20 @@ import org.omnifaces.cdi.ViewScoped;
 @ViewScoped
 public class CityMB implements Serializable {
     
+    @Inject CityService  city_service;
+    
     private boolean exist = false;
     private Date lastModified;
-    private final List<City> cities         = new ArrayList<>();
-    private List<City> filteredCities       = new ArrayList<>();
+    private List<City> cities         = new ArrayList<>();
+    private List<City> filteredCities = new ArrayList<>();
     
     @PostConstruct
     public void onInit() {
-        readDBF();
+       this.cities          = city_service.getListCity();
+       this.filteredCities  = this.cities;
     }
     
-    public void readDBF(){
-        
-        Charset stringCharset = Charset.forName("Cp866");
-        File dbf              = new File( FacesContext.getCurrentInstance().getExternalContext().getRealPath("/") + Utils.getProperty( "admin.cityPath", "data/cards.csv" ) );
-        
-        if ( dbf.exists() ){
-            cities.clear();
-            exist             = true;
-            this.lastModified   = new Date( dbf.lastModified() );
-            DbfRecord rec;
-            try {
-                InputStream is = new FileInputStream(dbf);
-                
-                DbfReader reader = new DbfReader( is );
-                DbfMetadata meta = reader.getMetadata();
-
-                System.out.println("Read DBF Metadata: " + meta);
-                while ((rec = reader.read()) != null) {
-                    rec.setStringCharset(stringCharset);
-                    City city = new City();
-                         city.setSOATO( rec.getString("SOATO"));
-                         city.setTIP( rec.getString("TIP") );
-                         city.setNAME(rec.getString("NAME") );
-                         city.setOBL(rec.getString("OBL") );
-                         city.setRAION(rec.getString("RAION") );
-                         city.setSOVET(rec.getString("SOVET") );
-                         city.setGNI(rec.getString("GNI") );
-                         city.setDATEL(rec.getString("DATEL") );
-                         city.setSOATON(rec.getString("SOATON") );
-                         city.setDATAV(rec.getString("DATAV") );
-                    this.cities.add(city);
-                }
-                    reader.close();
-                    is.close();
-                    
-                
-            } catch (Exception e ){
-                e.printStackTrace( System.err );
-            }
-        } else {
-            exist = false;
-        }
-    }
-
+    
     public boolean isExist() {
         return exist;
     }
@@ -109,4 +64,14 @@ public class CityMB implements Serializable {
     public List<City> getFilteredCities() {
         return filteredCities;
     }
+    
+    public void filterListener(FilterEvent filterEvent){
+        DataTable table = (DataTable) filterEvent.getSource();
+        System.out.println("-----> " + table.getGlobalFilter());
+        String val = (String) filterEvent.getFilters().get("globalFilter");
+        System.out.println("-----> " + filterEvent.getFilters().get("globalFilter"));
+        this.filteredCities = city_service.getListCity( val );
+        this.cities         = city_service.getListCity( val );    
+    }
+    
 }

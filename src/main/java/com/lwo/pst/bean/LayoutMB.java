@@ -17,8 +17,6 @@ public class LayoutMB implements Serializable {
 
     private String layout;
     
-    @Resource(name = "h2")    private DataSource datasource;
-
     @PostConstruct
     public void init() {
         setDefaultLayout();
