@@ -2,19 +2,61 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="#{layoutMB.layout}">
+                template="#{layoutMB.layout}"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="head-end">
         <ui:param name="renderBreadCrumb" value="false"/>
     </ui:define>
 
     <ui:define name="title">
-        
+        Список терминалов
     </ui:define>
 
+    
+    
     <ui:define name="body">
-        <!--
+        
+        <style>
+            .content{padding:0 !important}
+            .terminals table tbody td, body .terminals table thead th, body .terminals table thead th{
+                padding: 5px !important;
+                text-align: center;
+            }
+        </style>    
+        
+        <p:dataTable rowKey="#{info.UUID}" widgetVar="terminalTable" var="info" value="#{terminalsMB.terminals}" class="terminals">
+            <!--p:column headerText="UUID"><h:outputText value="#{info.UUID}"/> </p:column!-->
+            <!--p:column headerText="Title"><h:outputText value="#{info.title}"/> </p:column!-->
+            <p:column sortBy="#{info.workPlaceId}" headerText="WORKPLACEID" width="120"><h:outputText value="#{info.workPlaceId}"/> </p:column>
+            <p:column sortBy="#{info.moduleId}" headerText="MODULEID" width="90"><h:outputText value="#{info.moduleId}"/> </p:column>
+            <p:column sortBy="#{info.mode}" headerText="Тип" width="120"><h:outputText value="#{info.mode}"/> </p:column>
+            <p:column sortBy="#{info.owner}" sortable="true" headerText="Владелец"><h:outputText value="#{info.owner}"/> </p:column>
+            <p:column sortBy="#{info.address}" headerText="Адрес"><h:outputText value="#{info.address}"/> </p:column>
+            <p:column sortBy="#{info.soato}" headerText="SOATO" width="90"><h:outputText value="#{info.soato}"/> </p:column>
+            <!--p:column headerText="ZIP"><h:outputText value="#{info.zip}"/> </p:column!-->
+            <p:column sortBy="#{info.id}" headerText="ID"  width="50"><h:outputText value="#{info.id}"/> </p:column>
+            <p:column sortBy="#{info.ip}" headerText="IP"  width="120"><h:outputText value="#{info.ip}"/> </p:column>
+            <p:column sortBy="#{info.mac}" headerText="MAC" width="150"><h:outputText value="#{info.mac}"/> </p:column>
+            <p:column sortBy="#{info.lu_date}" headerText="Отметка" width="150">
+                <h:outputText value="#{info.lu_date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+                </h:outputText>    
+            </p:column>
+        </p:dataTable>    
         <script type="text/javascript">
+            $(document).ready(function () {
+                //$(".content-wrapper").removeAttr("style");
+                $.AdminLTE.layout.fix = function () {
+                    var b = $(window).height();
+                      $(".content-wrapper, .right-side")
+                              .css("height", b - $(".main-footer").outerHeight())
+                              .css("min-height", b - $(".main-footer").outerHeight());
+                  };      
+            });     
+            
+            
             if ('serviceWorker' in navigator) {
                  window.addEventListener('load', function () {
                     navigator.serviceWorker.register('sw.js').then(function (registration) {
@@ -25,6 +67,5 @@
                 });
             }
         </script>
-        !-->
     </ui:define>
 </ui:composition>

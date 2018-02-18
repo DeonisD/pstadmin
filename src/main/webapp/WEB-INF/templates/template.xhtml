@@ -6,7 +6,7 @@
                 template="/admin.xhtml">
 
     <ui:define name="head">
-        <title>Admin Starter</title>
+        <title>PST Admin</title>
         <meta name="theme-color" content="#444"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <f:loadBundle var="msg" basename="starter"/>
@@ -39,6 +39,7 @@
         </div>
 
         <script type="text/javascript">
+            setFixedNavbar();
             if(isMobile()) {
                 $('a.ui-link').click(function() {
                     $(this).prop('disabled', true);

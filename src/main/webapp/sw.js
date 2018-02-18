@@ -1,3 +1,4 @@
+/*
 var log = console.log.bind(console);
 var err = console.error.bind(console);
 
@@ -10,19 +11,21 @@ var appShellFilesToCache = [
     '/admin-starter/javax.faces.resource/theme.css.xhtml?ln=primefaces-admin',
     '/admin-starter/javax.faces.resource/fa/font-awesome.css.xhtml?ln=primefaces&amp;v=6.1'
 ];
-
+*/
+/*
 self.addEventListener('install', (e) => {
   e.waitUntil(self.skipWaiting());
   log('Service Worker: Installed');
-
+*/
   /*e.waitUntil(
     caches.open(cacheName).then((cache) => {
       log('Service Worker: Caching App Shell');
       return cache.addAll(appShellFilesToCache);
     })
   );*/
-});
+//});
 
+/*
 self.addEventListener('activate', (e) => {
   e.waitUntil(self.clients.claim());
   log('Service Worker: Active');
@@ -39,8 +42,8 @@ self.addEventListener('activate', (e) => {
       }));
     })
   );*/
-});
-
+//});
+/*
 self.addEventListener('fetch', (e) => {
   log('Service Worker: Fetch URL ', e.request.url);
 
@@ -56,5 +59,5 @@ self.addEventListener('fetch', (e) => {
         });
     })
   );*/
-});
+//});
 

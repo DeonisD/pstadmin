@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.layout}">
+
+    <ui:define name="title">
+        Список МНС
+    </ui:define>
+
+    <ui:define name="body">
+        <style>
+            .content{
+                padding : 0 !important;
+                /*overflow: auto;*/
+                overflow:hidden;
+            }
+            .file-panel {
+                
+                background-color:#fff;
+                padding: 5px;
+                
+            }
+            .file-scroll {
+                margin-top: 10px;
+            }
+            .b {
+                padding-left: 10px;
+            }
+            
+            .logo{
+                text-align: center;
+                border-right : 1px solid rgba(0,0,0,.03);
+            }
+            .file-row{
+                width:100%;
+                border-bottom : 1px solid rgba(0,0,0,.03);
+                margin-bottom: 5px;
+                margin-top: 5px
+            }
+        </style>    
+        
+        <p:outputPanel styleClass="col-md-6" style="padding:0">
+        <h:form id="form">
+            <p:scrollPanel style="height:200px" mode="native" styleClass="file-scroll">
+            <p:repeat value="#{mNSFilesMB.filesInFolder}" var="f" >
+                <h:panelGrid columns="2" styleClass="file-row" columnClasses="logo,detail" >
+                    <p:commandLink oncomplete="PF('carDialog').show()">
+                        <!--f:setPropertyActionListener value="" target="" /!-->
+                        <p:graphicImage library="img" name="txt.png" width="45%" /> 
+                    </p:commandLink>
+                    <p:outputPanel styleClass="file-panel" >
+                        <h:panelGrid columns="2" cellpadding="5" cellspacing="5" columnClasses="a,b" onclick="console.log( 'click' )">
+                            <h:outputText value="Имя:" />
+                            <h:outputText value="#{f.name}" style="font-weight: bold"/>
+
+                            <h:outputText value="Путь:" />
+                            <h:outputText value="#{f.path}"/>
+                            
+                            <h:outputText value="Последнее изменение:" />
+                            <h:outputText value="#{f.lastModified()}" style="font-weight: bold">
+                                <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss" />
+                            </h:outputText>    
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:repeat>
+            </p:scrollPanel>
+        </h:form>
+        </p:outputPanel>
+        
+        <script type="text/javascript">
+             
+            $(document).ready(function () {
+                $( window ).resize(function() {
+                    var b = $(window).height();
+                    $(".content").height( b - $(".main-footer").outerHeight() - $('.content-header').outerHeight());
+                    $(".content-wrapper, .right-side")
+                              .css("height", b - $(".main-footer").outerHeight())
+                              .css("min-height", b - $(".main-footer").outerHeight());
+                    $(".file-scroll").height( $(".content-wrapper, .right-side").innerHeight() - 55 );  
+                  });      
+                $( window ).resize();
+            });
+                
+        </script>    
+        
+    </ui:define>
+    
+</ui:composition>

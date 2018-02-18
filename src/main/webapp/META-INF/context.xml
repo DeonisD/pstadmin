@@ -1,16 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Context path="/pstadmin">
-  <Resource auth="Container" factory="org.jboss.weld.resources.ManagerObjectFactory" name="BeanManager" type="javax.enterprise.inject.spi.BeanManager"/>
-  
-  <Resource
-      name="h2"
-      type="javax.sql.DataSource"
-      url="jdbc:h2:${catalina.base}/data/pstadmin;FILE_LOCK=NO;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'"
-      driverClassName="org.h2.Driver"
-      username="pstadmin"
-      password="pstadmin"
-      maxActive="100"
-      maxIdle="20"/> 
-  
-  
+    <Resource name="BeanManager" 
+              auth="Container"
+              type="javax.enterprise.inject.spi.BeanManager"
+              factory="org.jboss.weld.resources.ManagerObjectFactory"/>
+
+    <Resource name="h2" 
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="org.h2.Driver"
+              url="jdbc:h2:${catalina.base}/data/pstadmin;INIT=RUNSCRIPT FROM 'classpath:scripts/create_pstadmin.sql'"
+              username="pstadmin" 
+              password="pstadmin"
+              maxActive="20" 
+              maxIdle="10" 
+              maxWait="-1"
+              description="Datasource to database"  />
+    
+    <!--Resource name="h2"
+              type="javax.sql.DataSource"
+              url="jdbc:h2:${catalina.base}/data/pstadmin"
+              driverClassName="org.h2.Driver"
+              username="pstadmin"
+              password="pstadmin"
+              maxActive="100"
+              maxIdle="20"/!--> 
 </Context>
